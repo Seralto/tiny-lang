@@ -169,4 +169,12 @@ The interpreter essentially executes the high-level commands represented by the 
 
 ## Tests
 
-Run `bundle exec rspec spec`
+`bundle exec rspec spec`
+
+## Examples
+
+```
+ruby bin/run.rb examples/example1.tiny
+ruby bin/run.rb examples/example2.tiny
+ruby bin/run.rb examples/example3.tiny
+```
