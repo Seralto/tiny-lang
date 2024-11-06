@@ -1,6 +1,6 @@
 # TinyLang
 
-As the name implies, TinyLang is a tiny interpreted language written in Ruby for didactic purpose.
+TinyLang is a tiny interpreted language written in Ruby for didactic purpose.
 
 ## Lexer
 
@@ -169,6 +169,4 @@ The interpreter essentially executes the high-level commands represented by the 
 
 ## Tests
 
-Run
-
-`bundle exec rspec spec`
+Run `bundle exec rspec spec`

@@ -1,8 +1,8 @@
 require 'rspec'
 
-require_relative '../src/lexer'
-require_relative '../src/parser'
-require_relative '../src/interpreter'
+require_relative '../lib/lexer'
+require_relative '../lib/parser'
+require_relative '../lib/interpreter'
 
 describe Interpreter do
   let(:lexer) { Lexer.new(input) }

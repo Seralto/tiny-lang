@@ -1,4 +1,4 @@
-require_relative '../lexer'
+require_relative '../lib/lexer'
 require 'rspec'
 
 describe Lexer do
