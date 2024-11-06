@@ -1,10 +1,9 @@
-# The Lexer class is responsible for breaking down the input source code
-# into tokens that can be used by the parser.
+require_relative 'tokens'
+
+# The Lexer class is responsible for breaking down the input source code into tokens that can be used by the parser.
 
 class Lexer
-  KEYWORDS = ['out']
-
-  Token = Struct.new(:type, :value)
+  KEYWORDS = { 'out' => TokenType::OUT }
 
   # Initializes the lexer with the input source code and sets the starting position to 0.
   def initialize(input)
@@ -18,13 +17,13 @@ class Lexer
     return nil if @position >= @input.length
 
     case current_char
-    when '(' then create_token(:LPAREN, advance)
-    when ')' then create_token(:RPAREN, advance)
-    when '+' then create_token(:PLUS, advance)
-    when '-' then create_token(:MINUS, advance)
-    when '*' then create_token(:ASTERISK, advance)
-    when '/' then create_token(:SLASH, advance)
-    when '=' then create_token(:EQUAL, advance)
+    when '(' then create_token(TokenType::LPAREN, advance)
+    when ')' then create_token(TokenType::RPAREN, advance)
+    when '+' then create_token(TokenType::PLUS, advance)
+    when '-' then create_token(TokenType::MINUS, advance)
+    when '*' then create_token(TokenType::ASTERISK, advance)
+    when '/' then create_token(TokenType::SLASH, advance)
+    when '=' then create_token(TokenType::EQUAL, advance)
     when '"' then tokenize_string
     when /^[a-zA-Z_]$/ then tokenize_identifier
     when /^[0-9]$/ then tokenize_number
@@ -57,32 +56,30 @@ class Lexer
     @position += 1 while current_char =~ /\s/
   end
 
-  # Handles identifiers and keywords. Advances through valid characters,
-  # checks if the value is a keyword, and creates a corresponding token.
+  # Handles identifiers and keywords. Advances through valid characters, checks if the value is a keyword, and creates a corresponding token.
   def tokenize_identifier
     start_pos = @position
     advance while current_char =~ /[a-zA-Z0-9_]/
     value = @input[start_pos...@position]
-    type = KEYWORDS.include?(value) ? value.upcase.to_sym : :IDENTIFIER
+    type = KEYWORDS[value] || TokenType::IDENTIFIER
     create_token(type, value)
   end
 
-  # Handles numeric values. Advances through all digits and creates a NUMBER token.
+  # Handles numeric values. Advances through all digit characters and creates a NUMBER token.
   def tokenize_number
     start_pos = @position
     advance while current_char =~ /[0-9]/
     value = @input[start_pos...@position]
-    create_token(:NUMBER, value)
+    create_token(TokenType::NUMBER, value)
   end
 
-  # Handles string literals enclosed in double quotes.
-  # Advances through all characters until the closing quote and creates a STRING token.
+  # Handles string literals enclosed in double quotes. Advances through all characters until the closing quote and creates a STRING token.
   def tokenize_string
     advance # Skip the opening quote
     start_pos = @position
     advance while current_char != '"'
     value = @input[start_pos...@position]
     advance # Skip the closing quote
-    create_token(:STRING, value)
+    create_token(TokenType::STRING, value)
   end
 end
