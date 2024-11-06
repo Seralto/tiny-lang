@@ -1,8 +1,8 @@
 require 'pry'
 
-require_relative 'lexer'
-require_relative 'parser'
-require_relative 'interpreter'
+require_relative './src/lexer'
+require_relative './src/parser'
+require_relative './src/interpreter'
 
 input = <<~INPUT
   x = 5
